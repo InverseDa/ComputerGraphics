@@ -1,0 +1,204 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.21"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "ComputerScience",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "3D::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-3D-Debug-ed5e4cf80d2a939cb7a9.json",
+					"name" : "3D",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Camera::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Camera-Debug-a4493124d22f3a1add4d.json",
+					"name" : "Camera",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DynamicTriangle::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DynamicTriangle-Debug-71f1375ccc1539eabb70.json",
+					"name" : "DynamicTriangle",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "DynamicTriangleClassShader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DynamicTriangleClassShader-Debug-e8716f1c0a6d5da42e9e.json",
+					"name" : "DynamicTriangleClassShader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GLM::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GLM-Debug-8bba5c0813821dcbaff3.json",
+					"name" : "GLM",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "HelloTriangle::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HelloTriangle-Debug-3ea64b4db682b8f1900d.json",
+					"name" : "HelloTriangle",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "HelloTriangleClassShader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HelloTriangleClassShader-Debug-6325e1d89788b745a70a.json",
+					"name" : "HelloTriangleClassShader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MVP::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MVP-Debug-3ac433815c170281fc2c.json",
+					"name" : "MVP",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MixTexture::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MixTexture-Debug-409b55a01f8afa56cad8.json",
+					"name" : "MixTexture",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MoreCube::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MoreCube-Debug-480e7deeaf817435eadd.json",
+					"name" : "MoreCube",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MouseMove::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MouseMove-Debug-8c93d2d839345f9667e3.json",
+					"name" : "MouseMove",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Move::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Move-Debug-8c7d6fd50e0b9a870003.json",
+					"name" : "Move",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Rectangle::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Rectangle-Debug-48a9c13a76b2685a8233.json",
+					"name" : "Rectangle",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RectangleClassShader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RectangleClassShader-Debug-f0d9e0018b3be8d30ea8.json",
+					"name" : "RectangleClassShader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Texture::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Texture-Debug-fce1fb1a52ff81818e65.json",
+					"name" : "Texture",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "demo::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-demo-Debug-b35095bbfb120fff3605.json",
+					"name" : "demo",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-main-Debug-10894cb44a2b25b18144.json",
+					"name" : "main",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "H:/Project/ComputerScience/cmake-build-debug",
+		"source" : "H:/Project/ComputerScience"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

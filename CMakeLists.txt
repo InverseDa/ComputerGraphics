@@ -1,0 +1,47 @@
+cmake_minimum_required(VERSION 3.21)
+project(ComputerScience)
+
+set(CMAKE_CXX_STANDARD 17)
+
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
+link_directories(${PROJECT_SOURCE_DIR}/lib)
+
+add_executable(main main.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(demo demo.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(HelloTriangle tutorial/1_HelloTriangle.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(HelloTriangleClassShader tutorial/1_HelloTriangle_UseClassShader.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(Rectangle tutorial/2_Rectangle.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(RectangleClassShader tutorial/2_Rectangle_UseClassShader.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(DynamicTriangle tutorial/3_DynamicTriangle.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(DynamicTriangleClassShader tutorial/3_DynamicTriangle_UseClassShader.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(GLM tutorial/4_GLM.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(Texture tutorial/5_Texture.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(MixTexture tutorial/5_MixTexture.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(MVP tutorial/6_MVP_MatrixTransformation.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(3D tutorial/7_3D.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(MoreCube tutorial/7_MoreCube.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(Camera tutorial/8_Camera.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(Move tutorial/8_MoveFree.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+add_executable(MouseMove tutorial/8_MouseMove.cpp src/glad.c src/InitShader.cpp src/Shader.cpp)
+
+target_link_libraries(main ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(demo ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(HelloTriangle ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(HelloTriangleClassShader ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(Rectangle ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(RectangleClassShader ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(DynamicTriangle ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(DynamicTriangleClassShader ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(GLM ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(Texture ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(MixTexture ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(MVP ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(3D ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(MoreCube ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(Camera ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(Move ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+target_link_libraries(MouseMove ${PROJECT_SOURCE_DIR}/lib/glfw3.dll)
+
+
+
+

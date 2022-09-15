@@ -1,0 +1,12 @@
+#version 330 core
+out vec4 FragColor;
+
+in vec3 ourColor;
+in vec2 TexCoord;
+
+uniform sampler2D texture1;
+uniform sampler2D texture2;
+
+void main(){
+    FragColor = mix(texture(texture2, TexCoord), texture(texture1, TexCoord), 0.5f);    //参数一为纹理，参数二为纹理坐标
+}
