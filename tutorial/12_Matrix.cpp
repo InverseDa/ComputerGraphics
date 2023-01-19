@@ -242,19 +242,19 @@ int main() {
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, cubePositions[0]);
         objectShader.use();
-        objectShader.set3Vector("lightPos", cubePositions[1]);
-        objectShader.set3Vector("viewPos", camera.cameraPos);
-        objectShader.set4Matrix("model", model);
-        objectShader.set4Matrix("view", view);
-        objectShader.set4Matrix("projection", projection);
+        objectShader.setVector3("lightPos", cubePositions[1]);
+        objectShader.setVector3("viewPos", camera.cameraPos);
+        objectShader.setMatrix4("model", model);
+        objectShader.setMatrix4("view", view);
+        objectShader.setMatrix4("projection", projection);
         objectShader.setFloat("time", (float) glfwGetTime());
         //将纹理传输到uniform
         objectShader.setInt("material.diffuse", 0);
         objectShader.setInt("material.specular", 1);
         objectShader.setFloat("material.shininess", 32.0f);
-        objectShader.set3Vector("light.ambient", 0.2f, 0.2f, 0.2f);
-        objectShader.set3Vector("light.diffuse", 0.5f, 0.5f, 0.5f);
-        objectShader.set3Vector("light.specular", 1.0f, 1.0f, 1.0f);
+        objectShader.setVector3("light.ambient", 0.2f, 0.2f, 0.2f);
+        objectShader.setVector3("light.diffuse", 0.5f, 0.5f, 0.5f);
+        objectShader.setVector3("light.specular", 1.0f, 1.0f, 1.0f);
 
         glBindVertexArray(vao[0]);
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -264,16 +264,15 @@ int main() {
         lightModel = glm::translate(lightModel, cubePositions[1]);
         lightModel = glm::scale(lightModel, glm::vec3(0.2f));
         lightShader.use();
-        lightShader.set4Matrix("model", lightModel);
-        lightShader.set4Matrix("view", view);
-        lightShader.set4Matrix("projection", projection);
+        lightShader.setMatrix4("model", lightModel);
+        lightShader.setMatrix4("view", view);
+        lightShader.setMatrix4("projection", projection);
         glBindVertexArray(vao[1]);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteProgram(objectShader.id);
     glfwTerminate();
 }
 

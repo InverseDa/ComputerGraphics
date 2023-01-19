@@ -192,18 +192,18 @@ int main() {
 
         objectShader.use();
         //将矩阵传到uniform变量中
-        objectShader.set4Matrix("view", view);
-        objectShader.set4Matrix("projection", projection);
-        objectShader.set3Vector("viewPos", camera.cameraPos);
+        objectShader.setMatrix4("view", view);
+        objectShader.setMatrix4("projection", projection);
+        objectShader.setVector3("viewPos", camera.cameraPos);
         objectShader.setInt("material.diffuse", 0);
         objectShader.setInt("material.specular", 1);
         objectShader.setFloat("material.shininess", 32.0f);
-        objectShader.set3Vector("light.ambient", 0.2f, 0.2f, 0.2f);
-        objectShader.set3Vector("light.diffuse", 0.5f, 0.5f, 0.5f);
-        objectShader.set3Vector("light.specular", 1.0f, 1.0f, 1.0f);
+        objectShader.setVector3("light.ambient", 0.2f, 0.2f, 0.2f);
+        objectShader.setVector3("light.diffuse", 0.5f, 0.5f, 0.5f);
+        objectShader.setVector3("light.specular", 1.0f, 1.0f, 1.0f);
         //Attenuation
-        objectShader.set3Vector("light.position", camera.cameraPos);
-        objectShader.set3Vector("light.direction", camera.cameraFront);
+        objectShader.setVector3("light.position", camera.cameraPos);
+        objectShader.setVector3("light.direction", camera.cameraFront);
         objectShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
         objectShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 
@@ -214,15 +214,15 @@ int main() {
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
             model = glm::rotate(model, glm::radians(angle) * 0.5f * (float) glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
-            objectShader.set4Matrix("model", model);
+            objectShader.setMatrix4("model", model);
 
             glBindVertexArray(vao[0]);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
         lightShader.use();
-        lightShader.set4Matrix("view", view);
-        lightShader.set4Matrix("projection", projection);
+        lightShader.setMatrix4("view", view);
+        lightShader.setMatrix4("projection", projection);
 
 //        //  rotate 做平移运动
 //        glm::mat4 casterModel = glm::mat4(1.0f);
@@ -237,7 +237,6 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteProgram(objectShader.id);
     glDeleteBuffers(2, vao);
     glDeleteBuffers(2, vbo);
     glfwTerminate();

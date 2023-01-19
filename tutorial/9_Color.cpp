@@ -187,7 +187,6 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteProgram(objectShader.id);
     glfwTerminate();
 }
 

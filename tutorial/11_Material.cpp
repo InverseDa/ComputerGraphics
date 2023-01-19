@@ -194,18 +194,18 @@ int main() {
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, cubePositions[0]);
         objectShader.use();
-        objectShader.set3Vector("lightPos", cubePositions[1]);
-        objectShader.set3Vector("viewPos", camera.cameraPos);
-        objectShader.set4Matrix("model", model);
-        objectShader.set4Matrix("view", view);
-        objectShader.set4Matrix("projection", projection);
-        objectShader.set3Vector("material.ambient", 1.0f, 0.5f, 0.31f);
-        objectShader.set3Vector("material.diffuse", 1.0f, 0.5f, 0.31f);
-        objectShader.set3Vector("material.specular", 0.5f, 0.5f, 0.5f);
+        objectShader.setVector3("lightPos", cubePositions[1]);
+        objectShader.setVector3("viewPos", camera.cameraPos);
+        objectShader.setMatrix4("model", model);
+        objectShader.setMatrix4("view", view);
+        objectShader.setMatrix4("projection", projection);
+        objectShader.setVector3("material.ambient", 1.0f, 0.5f, 0.31f);
+        objectShader.setVector3("material.diffuse", 1.0f, 0.5f, 0.31f);
+        objectShader.setVector3("material.specular", 0.5f, 0.5f, 0.5f);
         objectShader.setFloat("material.shininess", 32.0f);
-        objectShader.set3Vector("light.ambient", ambientColor);
-        objectShader.set3Vector("light.diffuse", diffuseColor);
-        objectShader.set3Vector("light.specular", 1.0f, 1.0f, 1.0f);
+        objectShader.setVector3("light.ambient", ambientColor);
+        objectShader.setVector3("light.diffuse", diffuseColor);
+        objectShader.setVector3("light.specular", 1.0f, 1.0f, 1.0f);
         glBindVertexArray(vao[0]);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -214,16 +214,15 @@ int main() {
         lightModel = glm::translate(lightModel, cubePositions[1]);
         lightModel = glm::scale(lightModel, glm::vec3(0.2f));
         lightShader.use();
-        lightShader.set4Matrix("model", lightModel);
-        lightShader.set4Matrix("view", view);
-        lightShader.set4Matrix("projection", projection);
+        lightShader.setMatrix4("model", lightModel);
+        lightShader.setMatrix4("view", view);
+        lightShader.setMatrix4("projection", projection);
         glBindVertexArray(vao[1]);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteProgram(objectShader.id);
     glfwTerminate();
 }
 

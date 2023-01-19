@@ -168,12 +168,12 @@ int main() {
         model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 
         objectShader.use();
-        objectShader.set4Matrix("view", view);
-        objectShader.set4Matrix("projection", projection);
-        objectShader.set4Matrix("model", model);
-        objectShader.set3Vector("lightPos", lightPos);
-        objectShader.set3Vector("lightColor", 1.0f, 1.0f, 1.0f);
-        objectShader.set3Vector("viewPos", camera.cameraPos);
+        objectShader.setMatrix4("view", view);
+        objectShader.setMatrix4("projection", projection);
+        objectShader.setMatrix4("model", model);
+        objectShader.setVector3("lightPos", lightPos);
+        objectShader.setVector3("lightColor", 1.0f, 1.0f, 1.0f);
+        objectShader.setVector3("viewPos", camera.cameraPos);
 
         carModel.Draw(objectShader);
 
@@ -186,9 +186,9 @@ int main() {
 
         cubeModel = glm::translate(cubeModel, lightPos);
         lightShader.use();
-        lightShader.set4Matrix("view", view);
-        lightShader.set4Matrix("projection", projection);
-        lightShader.set4Matrix("model", cubeModel);
+        lightShader.setMatrix4("view", view);
+        lightShader.setMatrix4("projection", projection);
+        lightShader.setMatrix4("model", cubeModel);
 
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -196,7 +196,6 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteProgram(objectShader.id);
     glfwTerminate();
 }
 

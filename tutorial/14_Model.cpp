@@ -108,16 +108,15 @@ int main() {
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 
-        objectShader.set4Matrix("view", view);
-        objectShader.set4Matrix("projection", projection);
-        objectShader.set4Matrix("model", model);
+        objectShader.setMatrix4("view", view);
+        objectShader.setMatrix4("projection", projection);
+        objectShader.setMatrix4("model", model);
 
         carModel.Draw(objectShader);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteProgram(objectShader.id);
     glfwTerminate();
 }
 
