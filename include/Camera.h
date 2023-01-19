@@ -10,7 +10,7 @@ public:
 	~Camera();
 
 	glm::mat4 getViewMatrix();
-	glm::mat4 getProjectionMatrix(bool isOrtho);
+	glm::mat4 getProjectionMatrix( bool isOrtho );
 
 	glm::mat4 lookAt(const glm::vec4& eye, const glm::vec4& at, const glm::vec4& up);
 
@@ -28,7 +28,7 @@ public:
 	// 每次更改相机参数后更新一下相关的数值
 	void updateCamera();
 	// 处理相机的键盘操作
-	void keyboard(int key, int x, int y);
+	void keyboard(int key, int action, int mode);
 
 	// 模视矩阵
 	glm::mat4 viewMatrix;
@@ -37,7 +37,7 @@ public:
 	// 相机位置参数
 	float radius = 4.0;
 	float rotateAngle = 0.0;
-	float upAngle = 30.0;
+	float upAngle = 0.0;
 	glm::vec4 eye;
 	glm::vec4 at;
 	glm::vec4 up;

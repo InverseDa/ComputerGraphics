@@ -9,6 +9,8 @@ int WIDTH = 600;
 int HEIGHT = 600;
 int mainWindow;
 
+float minV, maxV;
+
 struct openGLObject {
     // 顶点数组对象
     GLuint vao;
@@ -319,11 +321,9 @@ int main(int argc, char **argv) {
     init();
     printHelp();
     while (!glfwWindowShouldClose(mainwindow)) {
-
         display();
         glfwSwapBuffers(mainwindow);
         glfwPollEvents();
-
     }
     glfwTerminate();
     return 0;

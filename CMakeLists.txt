@@ -19,18 +19,25 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     # 暂存环境变量
     set(GLFW_HOME $ENV{GLFW_HOME})
     set(GLAD_HOME $ENV{GLAD_HOME})
-
+    set(ASSIMP_HOME $ENV{ASSIMP_HOME})
+    
     # 设置头文件目录
     include_directories("${GLFW_HOME}/include")
     include_directories("${GLAD_HOME}/include")
     include_directories("${PROJECT_SOURCE_DIR}/include ")
+    include_directories("${ASSIMP_HOME}/include")
 
     # 添加 GLFW3 预编译库
     add_library(glfw SHARED IMPORTED)
     SET_TARGET_PROPERTIES(glfw PROPERTIES IMPORTED_LOCATION "${GLFW_HOME}/lib/libglfw.dylib")
-
     # 链接 GLFW3 预编译库
     link_libraries(glfw)
+
+    # 寻找assimp
+    add_library(assimp SHARED IMPORTED)
+    SET_TARGET_PROPERTIES(assimp PROPERTIES IMPORTED_LOCATION "${ASSIMP_HOME}/lib/libassimp.5.2.4.dylib")
+    # 链接assimp库
+    link_libraries(assimp)
 
     add_executable(main main.cpp src/glad.c include/InitShader.cpp include/Camera.cpp include/TriMesh.cpp)
     add_executable(demo demo.cpp src/glad.c include/InitShader.cpp include/Camera.cpp include/TriMesh.cpp)

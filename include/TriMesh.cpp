@@ -1,4 +1,4 @@
-﻿#include "TriMesh.h"
+#include "TriMesh.h"
 
 
 // 一些基础颜色
@@ -35,10 +35,11 @@ const glm::vec3 triangle_vertices[3] = {
 // 正方形平面
 const glm::vec3 square_vertices[4] = {
 	glm::vec3(-0.5, -0.5, 0.0),
-	glm::vec3(-0.5, 0.5, 0.0),
-	glm::vec3(0.5, 0.5, 0.0),
 	glm::vec3(0.5, -0.5, 0.0),
+	glm::vec3(0.5, 0.5, 0.0),
+	glm::vec3(-0.5, 0.5, 0.0),
 };
+
 
 
 TriMesh::TriMesh()
@@ -47,6 +48,7 @@ TriMesh::TriMesh()
 	rotation = glm::vec3(0.0);
 	translation = glm::vec3(0.0);
 }
+
 
 TriMesh::~TriMesh()
 {
@@ -60,6 +62,11 @@ std::vector<glm::vec3> TriMesh::getVertexPositions()
 std::vector<glm::vec3> TriMesh::getVertexColors()
 {
 	return vertex_colors;
+}
+
+std::vector<glm::vec3> TriMesh::getVertexNormals()
+{
+	return vertex_normals;
 }
 
 std::vector<vec3i> TriMesh::getFaces()
@@ -76,6 +83,48 @@ std::vector<glm::vec3> TriMesh::getPoints()
 std::vector<glm::vec3> TriMesh::getColors()
 {
 	return colors;
+}
+
+std::vector<glm::vec3> TriMesh::getNormals()
+{
+	return normals;
+}
+
+void TriMesh::computeTriangleNormals()
+{
+    // 这里的resize函数会给face_normals分配一个和faces一样大的空间
+    face_normals.resize(faces.size());
+    for (size_t i = 0; i < faces.size(); i++) {
+        auto& face = faces[i];
+        // Task1 计算每个面片的法向量并归一化
+        glm::vec3 norm;
+        norm = glm::normalize(glm::cross(vertex_positions[face.y]-vertex_positions[face.x],
+                                         vertex_positions[face.z]-vertex_positions[face.x]));
+        face_normals[i] = norm;
+    }
+}
+
+void TriMesh::computeVertexNormals()
+{
+    // 计算面片的法向量
+    if (face_normals.size() == 0 && faces.size() > 0) {
+        computeTriangleNormals();
+    }
+    // 这里的resize函数会给vertex_normals分配一个和vertex_positions一样大的空间
+    // 并初始化法向量为0
+    vertex_normals.resize(vertex_positions.size(), glm::vec3(0, 0, 0));
+    // @TODO: Task1 求法向量均值
+    for (size_t i = 0; i < faces.size(); i++) {
+        auto& face = faces[i];
+        // @TODO: 先累加面的法向量
+        vertex_normals[face.x] += face_normals[i];
+        vertex_normals[face.y] += face_normals[i];
+        vertex_normals[face.z] += face_normals[i];
+    }
+    // @TODO 对累加的法向量归一化
+    for (size_t i = 0; i < vertex_normals.size(); i++) {
+        vertex_normals[i] = glm::normalize(vertex_normals[i]);
+    }
 }
 
 glm::vec3 TriMesh::getTranslation()
@@ -102,14 +151,7 @@ glm::mat4 TriMesh::getModelMatrix()
 	model = glm::rotate(model, glm::radians(getRotation()[1]), glm::vec3(0.0, 1.0, 0.0));
 	model = glm::rotate(model, glm::radians(getRotation()[0]), glm::vec3(1.0, 0.0, 0.0));
 	model = glm::scale(model, getScale());
-	//return translate * rotationZ * rotationY * rotationX * scale;
-	//glm::mat4 model1 = scale * rotationX * rotationY * rotationZ * translate;
 	return model;
-	// return Translate(getTranslation()) *
-	// 	RotateZ(getRotation()[2]) *
-	// 	RotateY(getRotation()[1]) *
-	// 	RotateX(getRotation()[0]) *
-	// 	Scale(getScale());
 }
 
 void TriMesh::setTranslation(glm::vec3 translation)
@@ -127,18 +169,33 @@ void TriMesh::setScale(glm::vec3 scale)
 	this->scale = scale;
 }
 
+glm::vec4 TriMesh::getAmbient() { return ambient; };
+glm::vec4 TriMesh::getDiffuse() { return diffuse; };
+glm::vec4 TriMesh::getSpecular() { return specular; };
+float TriMesh::getShininess() { return shininess; };
+
+void TriMesh::setAmbient(glm::vec4 _ambient) { ambient = _ambient; };
+void TriMesh::setDiffuse(glm::vec4 _diffuse) { diffuse = _diffuse; };
+void TriMesh::setSpecular(glm::vec4 _specular) { specular = _specular; };
+void TriMesh::setShininess(float _shininess) { shininess = _shininess; };
+
 void TriMesh::cleanData() {
 	vertex_positions.clear();
-	vertex_colors.clear();	
+	vertex_colors.clear();
+	vertex_normals.clear();
 	
 	faces.clear();
+	face_normals.clear();
 
 	points.clear();
 	colors.clear();
+	normals.clear();
 }
 
 void TriMesh::storeFacesPoints() {
-
+	// 计算法向量
+	if (vertex_normals.size() == 0)
+		computeVertexNormals();
 	// 根据每个三角面片的顶点下标存储要传入GPU的数据
 	for (int i = 0; i < faces.size(); i++)
 	{
@@ -150,12 +207,14 @@ void TriMesh::storeFacesPoints() {
 		colors.push_back(vertex_colors[faces[i].x]);
 		colors.push_back(vertex_colors[faces[i].y]);
 		colors.push_back(vertex_colors[faces[i].z]);
+		// 法向量
+		if (vertex_normals.size() != 0) {
+			normals.push_back(vertex_normals[faces[i].x]);
+			normals.push_back(vertex_normals[faces[i].y]);
+			normals.push_back(vertex_normals[faces[i].z]);
+		}
 
-		//colors.push_back(basic_colors[i/2]);
-		//colors.push_back(basic_colors[i/2]);
-		//colors.push_back(basic_colors[i/2]);
 	}
-
 }
 
 // 立方体生成12个三角形的顶点索引
@@ -163,6 +222,7 @@ void TriMesh::generateCube() {
 	// 创建顶点前要先把那些vector清空
 	cleanData();
 
+	// 此函数，存储立方体的各个面信息
 	for (int i = 0; i < 8; i++)
 	{
 		vertex_positions.push_back(cube_vertices[i]);
@@ -182,24 +242,6 @@ void TriMesh::generateCube() {
 	faces.push_back(vec3i(2, 7, 3));
 	faces.push_back(vec3i(1, 7, 5));
 	faces.push_back(vec3i(1, 3, 7));
-
-	// faces.push_back(vec3i(0, 1, 3));
-	// faces.push_back(vec3i(0, 3, 2));
-
-	// faces.push_back(vec3i(1, 4, 5));
-	// faces.push_back(vec3i(1, 0, 4));
-
-	// faces.push_back(vec3i(4, 0, 2));
-	// faces.push_back(vec3i(4, 2, 6));
-
-	// faces.push_back(vec3i(5, 6, 4));
-	// faces.push_back(vec3i(5, 7, 6));
-
-	// faces.push_back(vec3i(2, 6, 7));
-	// faces.push_back(vec3i(2, 7, 3));
-	
-	// faces.push_back(vec3i(1, 7, 5));
-	// faces.push_back(vec3i(1, 3, 7));
 
 	storeFacesPoints();
 }
@@ -236,7 +278,6 @@ void TriMesh::generateSquare(glm::vec3 color)
 	// 每个三角面片的顶点下标
 	faces.push_back(vec3i(0, 1, 2));
 	faces.push_back(vec3i(0, 2, 3));
-
 	storeFacesPoints();
 }
 
@@ -249,6 +290,7 @@ void TriMesh::readOff(const std::string& filename)
     }
     std::ifstream fin;
     fin.open(filename);
+    // 此函数读取OFF文件中三维模型的信息
     if (!fin)
     {
         printf("File on error\n");
@@ -288,3 +330,98 @@ void TriMesh::readOff(const std::string& filename)
 
     storeFacesPoints();
 };
+
+std::pair<float,float> TriMesh::readOff_usepair(const std::string& filename)
+{
+    //TODO:
+    float minV = 0x7f, maxV = 0.0f;
+    // fin打开文件读取文件信息
+    if (filename.empty())
+    {
+        return {0,0};
+    }
+    std::ifstream fin;
+    fin.open(filename);
+    // 此函数读取OFF文件中三维模型的信息
+    if (!fin)
+    {
+        printf("File on error\n");
+        return {0,0};
+    }
+    else
+    {
+        printf("File open success\n");
+
+        cleanData();
+
+        int nVertices, nFaces, nEdges;
+
+        // 读取OFF字符串
+        std::string str;
+        fin >> str;
+        // 读取文件中顶点数、面片数、边数
+        fin >> nVertices >> nFaces >> nEdges;
+        // 根据顶点数，循环读取每个顶点坐标
+        for (int i = 0; i < nVertices; i++)
+        {
+            glm::vec3 tmp_node;
+            fin >> tmp_node.x >> tmp_node.y >> tmp_node.z;
+            minV = std::min(minV, tmp_node.y);
+            maxV = std::max(maxV, tmp_node.y);
+            vertex_positions.push_back(tmp_node);
+            vertex_colors.push_back(tmp_node);
+        }
+        // 根据面片数，循环读取每个面片信息，并用构建的vec3i结构体保存
+        for (int i = 0; i < nFaces; i++)
+        {
+            int num, a, b, c;
+            // num记录此面片由几个顶点构成，a、b、c为构成该面片顶点序号
+            fin >> num >> a >> b >> c;
+            faces.push_back(vec3i(a, b, c));
+        }
+    }
+    fin.close();
+
+    storeFacesPoints();
+    return {minV, maxV};
+};
+
+
+// Light
+glm::mat4 Light::getShadowProjectionMatrix(float h) {
+	// 这里只实现了Y=0平面上的阴影投影矩阵，其他情况自己补充
+	float lx, ly, lz;
+
+	glm::mat4 modelMatrix = this->getModelMatrix();
+	glm::vec4 light_position = modelMatrix * glm::vec4(this->translation,1.0);
+	
+	lx = light_position[0];
+	ly = light_position[1];
+	lz = light_position[2];
+	
+	return glm::mat4(
+		h-ly, 0.0, 0.0, 0.0,
+		lx, h, lz, 1.0,
+		0.0, 0.0, h-ly, 0.0,
+		-lx*h, -h * ly, -lz * h, -ly
+	);
+}
+
+glm::mat4 Light::getShadowProjectionMatrix() {
+    // 这里只实现了Y=0平面上的阴影投影矩阵，其他情况自己补充
+    float lx, ly, lz;
+
+    glm::mat4 modelMatrix = this->getModelMatrix();
+    glm::vec4 light_position = modelMatrix * glm::vec4(this->translation,1.0);
+
+    lx = light_position[0];
+    ly = light_position[1];
+    lz = light_position[2];
+
+    return glm::mat4(
+            -ly, 0.0, 0.0, 0.0,
+            lx, 0.0, lz, 1.0,
+            0.0, 0.0, -ly, 0.0,
+            0.0, 0.0, 0.0, -ly
+    );
+}
